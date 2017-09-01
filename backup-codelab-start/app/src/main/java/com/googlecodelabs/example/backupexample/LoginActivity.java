@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         //******************* Implement Login Hinting *****************
 
-        //*** End implement Login Hinting ***
+        //******************* End implement Login Hinting *************
     }
 
     private void populateAutoComplete() {

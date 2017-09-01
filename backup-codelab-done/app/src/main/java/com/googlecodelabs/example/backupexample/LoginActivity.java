@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     /**
      * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world"
@@ -116,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (accountHint != null) {
             mEmailView.setHint(accountHint);
         }
-        //*** End implement Login Hinting ***
+        //******************* End implement Login Hinting *************
     }
 
     private void populateAutoComplete() {

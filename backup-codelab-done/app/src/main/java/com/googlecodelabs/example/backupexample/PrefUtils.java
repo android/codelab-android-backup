@@ -31,7 +31,7 @@ public class PrefUtils {
      * Since this has the actual details, we exclude it from backup.
      */
     private static final String PREF_LOGIN_DETAILS =
-            "com.googlecodelab.example.backupexample.PREF_LOGIN_DETAILS";
+            "com.googlecodelabs.example.backupexample.PREF_LOGIN_DETAILS";
 
     /**
      * This shared preferences file contains information that should be backed up.
@@ -39,7 +39,7 @@ public class PrefUtils {
      * be helpful for end users after a backup
      */
     private static final String PREF_APP_INFO =
-            "com.googlecodelab.example.backupexample.PREF_APP_INFO";
+            "com.googlecodelabs.example.backupexample.PREF_APP_INFO";
 
     private static final String ACCOUNT_NAME = "ACCOUNT_NAME";
     private static final String ACCOUNT_AUTH_KEY = "ACCOUNT_AUTH_KEY";
@@ -67,7 +67,7 @@ public class PrefUtils {
     /**
      * Set the Login Account name once the login is successful.
      *
-     * Here we also set an account name hint for the user to remember which account they
+     * Here we also set an account name hint to remind the user of the account they
      * used once the app has been restored.
      *
      * @param context Context used for SharedPreferences

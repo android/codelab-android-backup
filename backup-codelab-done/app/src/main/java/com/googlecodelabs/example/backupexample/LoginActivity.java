@@ -183,7 +183,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+        if (!isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -218,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     private boolean isPasswordValid(String password) {
-        return password.length() > 4;
+        return password != null && password.length() > 4;
     }
 
     /**
@@ -340,12 +340,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     // Account exists, return true if the password matches.
                     if (pieces[1].equals(mPassword)) {
                         // TODO: register the new account here and get back an authKey
-                        finishLogin(mEmail, mPassword);
                         return true;
                     }
                 }
             }
-            return true;
+            return false;
         }
 
         @Override
@@ -354,7 +353,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                finishLogin(mEmail, mPassword);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
@@ -375,6 +374,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         // from backup for security.
         PrefUtils.setLoginAccount(LoginActivity.this, email, password);
         startActivity(new Intent(this, SettingsActivity.class));
+        finish();
     }
 }
 

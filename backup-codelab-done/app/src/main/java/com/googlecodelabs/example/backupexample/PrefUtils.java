@@ -94,7 +94,7 @@ class PrefUtils {
                 .edit()
                 .remove(ACCOUNT_NAME)
                 .remove(ACCOUNT_AUTH_KEY)
-                .commit();
+                .apply();
     }
 
     private static String createHint(String accountName) {

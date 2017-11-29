@@ -18,11 +18,14 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.Spanned;
 
 /**
  * Class for storing and accessing SharedPreferences
  */
-public class PrefUtils {
+class PrefUtils {
 
     /**
      * We store the login details such as the actual email address
@@ -57,7 +60,7 @@ public class PrefUtils {
      * @param context Context for fetching SharedPreferences
      * @return boolean indicating whether we should show the login screen
      */
-    public static boolean needsLogin(Context context) {
+    static boolean needsLogin(Context context) {
         SharedPreferences preferences =
                 context.getSharedPreferences(PREF_LOGIN_DETAILS, Context.MODE_PRIVATE);
         return preferences.getString(ACCOUNT_AUTH_KEY, null) == null ||
@@ -67,7 +70,7 @@ public class PrefUtils {
     /**
      * Set the Login Account name once the login is successful.
      *
-     * Here we also set an account name hint to remind the user of the account they
+     * Here we also set an account name hint for the user to remember which account they
      * used once the app has been restored.
      *
      * @param context Context used for SharedPreferences
@@ -86,6 +89,14 @@ public class PrefUtils {
                 .apply();
     }
 
+    static void logout(@NonNull Context context) {
+        context.getSharedPreferences(PREF_LOGIN_DETAILS, Context.MODE_PRIVATE)
+                .edit()
+                .remove(ACCOUNT_NAME)
+                .remove(ACCOUNT_AUTH_KEY)
+                .apply();
+    }
+
     private static String createHint(String accountName) {
         int idx = accountName.indexOf("@");
         String namePart = accountName;
@@ -99,18 +110,38 @@ public class PrefUtils {
     }
 
     @Nullable
-    public static String getLoginAccount(@NonNull Context context) {
+    static String getLoginAccount(@NonNull Context context) {
         return context.getSharedPreferences(PREF_LOGIN_DETAILS, Context.MODE_PRIVATE)
                 .getString(ACCOUNT_NAME, null);
     }
 
-    public static String getLoginAuthKey(Context context) {
+    static String getLoginAuthKey(Context context) {
         return context.getSharedPreferences(PREF_LOGIN_DETAILS, Context.MODE_PRIVATE)
                 .getString(ACCOUNT_AUTH_KEY, null);
     }
 
-    public static String getLoginHint(Context context) {
+    static String getLoginHint(Context context) {
         return context.getSharedPreferences(PREF_APP_INFO, Context.MODE_PRIVATE)
                 .getString(ACCOUNT_NAME_HINT, null);
+    }
+
+    static Spanned getDebugText(@NonNull Context context) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<b>SHARED PREFS DEBUG:<br></b>");
+        sb.append(ACCOUNT_NAME_HINT);
+        sb.append(": <i>");
+        sb.append(PrefUtils.getLoginHint(context));
+        sb.append("</i><br>\n");
+
+        sb.append(ACCOUNT_NAME);
+        sb.append(": <i>");
+        sb.append(PrefUtils.getLoginAccount(context));
+        sb.append("</i><br>\n");
+
+        sb.append(ACCOUNT_AUTH_KEY);
+        sb.append(": <i>");
+        sb.append(PrefUtils.getLoginAuthKey(context));
+        sb.append("</i><br>\n");
+        return Html.fromHtml(sb.toString());
     }
 }
